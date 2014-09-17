@@ -24,8 +24,8 @@ function piler(_pile){
     }
     
 
-    var draw = function(_num){
-        if(_num === undefined){
+    var draw = function(_num){     // 引数なしで全部引く。  
+        if(_num === undefined){    // === undefined使うってどうよ？
             _num = 0;
         }       
         if(_length > 0){
@@ -33,7 +33,7 @@ function piler(_pile){
             updateLength();
             return _drawed;
         }
-        return "empty";
+        return "empty";　　// try:catchで書いたほうがいい
     }
 
 
@@ -54,14 +54,14 @@ function piler(_pile){
         updateLength();
     }
     
-    var open = function(_idx, _num){
+    var open = function(_idx, _num){　　　　// 引数なしで全部開く。
         _idx = _idx - 1 || 0;
         _num = arguments[1] || 1;
         
         return _pile.slice(_idx, _idx + _num);
     }
 
-    var reverseOpen = function(_idx, _num){
+    var reverseOpen = function(_idx, _num){    // _.jsで非破壊ソートしようよ　-> indexOfで探せばよくね
         _idx = _idx - 1 || 0;
         _num = arguments[1] || 0;
         var _rsl = new Array(_num);
@@ -74,39 +74,39 @@ function piler(_pile){
         return _rsl;
     }
     
-    var put = function(_put, _idx){
+    var put = function(_put, _idx){    
         _pile = _pile.concat(_put);
-        updateLength();
+        updateLength();                   //  iranai
         return _put;
     }
     
     var cut = function(_num){
         var _cut = _pile.splice(0, Math.ceil(_length/2));
-        updateLength();
+        updateLength();                   // iranai
         return piler(_cut);
     }
     
     var concatPile = function(_pileObj){
         _pile = _pile.concat(_pileObj.opennAll());
         updateLength();
-//        delete _pileObj;
+//        delete _pileObj;  // global objectをdeleteする必要がある
     }
 
 
-    var uniqObjDraw = function(obj){
+    var uniqObjDraw = function(obj){    // drawTargetObj
         return draw(_pile.indexOf(obj));
         
     } 
 
-    var uniqObjSearch = function(obj){
+    var uniqObjSearch = function(obj){  // getObjIndex(同値は探せない)
         return _pile.indexOf(obj);
         
     } 
 
 
     
-// _で書き換えろ    
-    var uniqSearch = function(fn){
+// _で書き換えろ[配列で帰ってくる]    
+    var search = function(fn){     // _のフィルターかなんかで書き換えよう. ex) function(x){if(x.num === 1){return x}} 
         var _rsl;
         for (var _i = 0; _i < _length; _i++){
             if (fn(_pile[_i])){
