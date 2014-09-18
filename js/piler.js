@@ -11,7 +11,11 @@ function piler(_pile){
     verifyPile(_pile);
 
     var _initPile = [].concat(_pile); // 初期状態をキャッシュ
-    var _length = _pile.length;　     // いらなくね
+    var _length = function(){         // getterメソッドとして実装
+        return _pile.length ; 
+    } 
+    
+
     var _maxIdx = _pile.length - 1;   // いらなくね
 
     var updateLength = function(){    // いらなくね
@@ -134,11 +138,14 @@ function piler(_pile){
     }
     
     return {
+        // プロパティ
+
+        // メソッド
+        length: _length,
         uniqObjDraw: uniqObjDraw,
         uniqObjSearch: uniqObjSearch,
         draw: draw,
         randomDraw: randomDraw,
-        length: showIndexes,
         shuffle: shuffle,
         reset: reset,
         open: open,
