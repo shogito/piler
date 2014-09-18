@@ -1,6 +1,14 @@
 "use strict"
 // underscore.jsに依存
 function piler(_pile){
+    // _pileが配列以外なら例外だせ
+    function verifyPile(_pile){
+        if ( ! (_pile instanceof Array) ){
+            throw "error: argument is not an Array"
+        }
+    }
+
+    verifyPile(_pile);
 
     var _initPile = [].concat(_pile); // 初期状態をキャッシュ
     var _length = _pile.length;　     // いらなくね
