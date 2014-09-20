@@ -42,16 +42,15 @@ function piler(pile){
         return _rsl;
     }
 
-
-
-    var draw = function(num){     // 引数なしで全部引く。  
-        if(num === undefined){    // === undefined使うってどうよ？
+    var draw = function(num){     // 引数なしで1枚引く。  
+        if(num === void 0){    // === undefined使うってどうよ？
             num = 0;
-        }       
-        if(length > 0){
+        }
+        if (pile.length > num　& -pile.length <= num){  // (length -1) => num > -lengthであれば適正 
             var drawed = pile.splice(num, 1);
             return drawed;
         }
+        throw "error: index out of Range"
     }
 
     var drawRandom = function(num){    // drawのnumに乱数ぶっこめばよくね

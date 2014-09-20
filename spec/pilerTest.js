@@ -14,14 +14,14 @@ describe("pilerの初期化テスト",function(){
         var func = function(){
         	piler("");
         }
-    	expect(func).toThrow('error: argument is not an Array')
+    	expect(func).toThrow('error: argument is not an Array');
     })
 
     it("オブジェクト", function(){
     	var func = function(){
     		piler({});
     	}
-    	expect(func).toThrow('error: argument is not an Array')
+    	expect(func).toThrow('error: argument is not an Array');
     })
 })
 
@@ -38,8 +38,6 @@ describe("piler.lengthのテスト", function(){
     // 更新系実行後のテスト書け
 
 })
-
-
 
 describe("openメソッドのテスト",function(){
     beforeEach(function(){
@@ -101,5 +99,73 @@ describe("openメソッドのテスト",function(){
     	expect(this.pile.length()).toEqual(5);   	
     })
 
+    // 
+    it("pile.open(5,5)",function(){
+    	expect(this.pile.open(2,18)).toEqual([3,4,5]);
+    	expect(this.pile.length()).toEqual(5);   	
+    })
 
+
+})
+
+describe("drawメソッドテスト。存在しないindexがあれば例外スローする",function(){
+    beforeEach(function(){
+    	this.p = [1,2,3,4,5];
+    	this.pile = piler(this.p);
+    })
+    it("pile.draw()引数なし。空になるまで引き続ける",function(){
+        expect(JSON.stringify(this.pile.draw())).toEqual(JSON.stringify([1]));
+        expect(this.pile.length()).toEqual(4);
+        expect(JSON.stringify(this.pile.open())).toEqual(JSON.stringify([2,3,4,5]));
+
+        expect(JSON.stringify(this.pile.draw())).toEqual(JSON.stringify([2]));
+        expect(this.pile.length()).toEqual(3);
+        expect(JSON.stringify(this.pile.open())).toEqual(JSON.stringify([3,4,5]));
+
+        expect(JSON.stringify(this.pile.draw())).toEqual(JSON.stringify([3]));
+        expect(this.pile.length()).toEqual(2);
+        expect(JSON.stringify(this.pile.open())).toEqual(JSON.stringify([4,5]));
+
+        expect(JSON.stringify(this.pile.draw())).toEqual(JSON.stringify([4]));
+        expect(this.pile.length()).toEqual(1);
+        expect(JSON.stringify(this.pile.open())).toEqual(JSON.stringify([5]));
+
+        expect(JSON.stringify(this.pile.draw())).toEqual(JSON.stringify([5]));
+        expect(this.pile.length()).toEqual(0);
+        expect(JSON.stringify(this.pile.open())).toEqual(JSON.stringify([]));
+        
+        // 例外テスト
+        var pile = this.pile
+        var func = function(){
+            pile.draw();
+        }
+        expect(func).toThrow('error: index out of Range');
+        expect(this.pile.length()).toEqual(0);
+        expect(JSON.stringify(this.pile.open())).toEqual(JSON.stringify([]));
+    })
+    it("pile.draw()引数あり(minimal:0)",function(){
+        expect(JSON.stringify(this.pile.draw(0))).toEqual(JSON.stringify([1]));
+        expect(this.pile.length()).toEqual(4);
+        expect(JSON.stringify(this.pile.open())).toEqual(JSON.stringify([2,3,4,5]));
+    })
+    it("pile.draw()引数あり(max:4)",function(){
+        expect(JSON.stringify(this.pile.draw(4))).toEqual(JSON.stringify([5]));
+        expect(this.pile.length()).toEqual(4);
+        expect(JSON.stringify(this.pile.open())).toEqual(JSON.stringify([1,2,3,4]));
+    })
+    it("pile.draw()引数あり(out of index:5)",function(){
+        // 例外テスト
+        var pile = this.pile
+        var func = function(){
+            pile.draw(5);
+        } 
+        expect(func).toThrow("error: index out of Range");
+        expect(this.pile.length()).toEqual(5);
+        expect(JSON.stringify(this.pile.open())).toEqual(JSON.stringify([1,2,3,4,5]));
+    })
+    it("pile.draw()引数あり(minus:-1)",function(){
+        expect(JSON.stringify(this.pile.draw(-1))).toEqual(JSON.stringify([5]));
+        expect(this.pile.length()).toEqual(4);
+        expect(JSON.stringify(this.pile.open())).toEqual(JSON.stringify([1,2,3,4]));
+    })
 })
