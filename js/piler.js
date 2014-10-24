@@ -42,8 +42,8 @@ function piler(pile){
         return _rsl;
     }
 
-    var draw = function(num){     // 引数なしで1枚引く。  
-        if(num === void 0){    // === undefined使うってどうよ？
+    var draw = function(num){     // 引数なしで1枚引く。  // 例外出さずに[]返した方がいい？
+        if(num === void 0){   
             num = 0;
         }
         if (pile.length > num　& -pile.length <= num){  // (length -1) => num > -lengthであれば適正 
@@ -53,7 +53,17 @@ function piler(pile){
         throw "error: index out of Range"
     }
 
-    var drawRandom = function(num){    // drawのnumに乱数ぶっこめばよくね
+    var drawCards = function(num){
+        var drawed = [];
+        for (var i = 0; num > i; i++){
+            if(pile.length > 0){
+                drawed += draw();
+            }
+        }
+    }
+
+
+    var drawRandom = function(num){    // num回無作為に引いて配列を返す
         var drawed = []   
         for (var i = 0; num > i; i++){    
             if(pile.length > 0){
