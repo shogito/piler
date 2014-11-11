@@ -108,7 +108,7 @@ describe("openメソッドのテスト",function(){
 
 })
 
-describe("drawメソッドテスト。存在しないindexがあれば例外スローする",function(){
+describe("drawメソッドテスト。存在しないindexがあれば[]返す",function(){
     beforeEach(function(){
     	this.p = [1,2,3,4,5];
     	this.pile = piler(this.p);
@@ -134,12 +134,7 @@ describe("drawメソッドテスト。存在しないindexがあれば例外ス�
         expect(this.pile.length()).toEqual(0);
         expect(JSON.stringify(this.pile.open())).toEqual(JSON.stringify([]));
         
-        // 例外テスト
-        var pile = this.pile
-        var func = function(){
-            pile.draw();
-        }
-        expect(func).toThrow('error: index out of Range');
+        expect(JSON.stringify(this.pile.draw())).toEqual(JSON.stringify([]));
         expect(this.pile.length()).toEqual(0);
         expect(JSON.stringify(this.pile.open())).toEqual(JSON.stringify([]));
     })
@@ -155,11 +150,7 @@ describe("drawメソッドテスト。存在しないindexがあれば例外ス�
     })
     it("pile.draw()引数あり(out of index:5)",function(){
         // 例外テスト
-        var pile = this.pile
-        var func = function(){
-            pile.draw(5);
-        } 
-        expect(func).toThrow("error: index out of Range");
+        expect(JSON.stringify(this.pile.draw(5))).toEqual(JSON.stringify([]));
         expect(this.pile.length()).toEqual(5);
         expect(JSON.stringify(this.pile.open())).toEqual(JSON.stringify([1,2,3,4,5]));
     })

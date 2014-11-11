@@ -42,15 +42,12 @@ function piler(pile){
         return _rsl;
     }
 
-    var draw = function(num){     // 引数なしで1枚引く。  // 例外出さずに[]返した方がいい？
+    var draw = function(num){     // 引数なしで上から1枚引く。引数指定で上からn番目を1枚引く pileが0かout of indexなら[]が返る。
         if(num === void 0){   
             num = 0;
         }
-        if (pile.length > num　& -pile.length <= num){  // (length -1) => num > -lengthであれば適正 
-            var drawed = pile.splice(num, 1);
-            return drawed;
-        }
-        throw "error: index out of Range"
+        var drawed = pile.splice(num, 1);
+        return drawed;
     }
 
     var drawCards = function(num){
